@@ -11,6 +11,6 @@ Check [simpleheat](https://github.com/mourner/simpleheat) for basic usage.
 heat.mixMode(modeOption);
 ```
 where modeOption is one of the following:
-* "Superimposed"
-* "Averaged"
+* `"superimposed"`
+* `"averaged"`
 

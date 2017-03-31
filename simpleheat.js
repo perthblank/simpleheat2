@@ -14,7 +14,7 @@ function simpleheat(canvas) {
     this._max = 1;
     this._data = [];
 
-    this._mixGrayScale = this._mixSuperImposed;
+    this._mixGrayScale = this._mixSuperimposed;
 }
 
 simpleheat.prototype = {
@@ -110,11 +110,11 @@ simpleheat.prototype = {
     },
 
     mixMode: function (mode) {
-        if (mode="SuperImposed") this._mixGrayScale = this._mixSuperImposed;
+        if (mode="Superimposed") this._mixGrayScale = this._mixSuperimposed;
         if (mode="Averaged") this._mixGrayScale = this._mixAveraged;
     },
 
-    _mixSuperImposed: function (minOpacity) {
+    _mixSuperimposed: function (minOpacity) {
         var ctx = this._ctx;
 
         ctx.clearRect(0, 0, this._width, this._height);

@@ -110,8 +110,10 @@ simpleheat.prototype = {
     },
 
     mixMode: function (mode) {
-        if (mode="Superimposed") this._mixGrayScale = this._mixSuperimposed;
-        if (mode="Averaged") this._mixGrayScale = this._mixAveraged;
+        if (mode == "superimposed") this._mixGrayScale = this._mixSuperimposed;
+        if (mode == "averaged") this._mixGrayScale = this._mixAveraged;
+
+        return this;
     },
 
     _mixSuperimposed: function (minOpacity) {
@@ -158,23 +160,27 @@ simpleheat.prototype = {
             offsetX = Math.floor(p[0] - this._r);
             offsetY = Math.floor(p[1] - this._r);
 
-
             for (var ii = 0, llen = imageDataCircle.data.length; ii < llen; ii += 4) 
             {
                 circlePixl = ii/4;
+
                 crow = Math.floor((circlePixl)/diameter);
                 ccol = Math.floor((circlePixl)%diameter);
                 canvasIndex = ((crow+offsetY)*this._width*4+(ccol+offsetX)*4);
                 canvasPixl = canvasIndex/4;
                 currentAlpha = imageDataCircle.data[ii+3]*globalAlpha;
-                if(currentAlpha>0)
+                if(currentAlpha>30) //threshold to optimize display
                 {
                     imageDataCanvas.data[canvasIndex+3] = 
                         (overlayCounter[canvasPixl]*imageDataCanvas.data[canvasIndex+3]+currentAlpha)/
                             (overlayCounter[canvasPixl]+1);
+                            //1;
                     overlayCounter[canvasPixl] += 1;
                 }
-
+                else if(currentAlpha>0)
+                {
+                    imageDataCanvas.data[canvasIndex+3] = Math.max(imageDataCanvas.data[canvasIndex+3], currentAlpha)
+                }
             }
         }
 

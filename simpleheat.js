@@ -169,17 +169,13 @@ simpleheat.prototype = {
                 canvasIndex = ((crow+offsetY)*this._width*4+(ccol+offsetX)*4);
                 canvasPixl = canvasIndex/4;
                 currentAlpha = imageDataCircle.data[ii+3]*globalAlpha;
-                if(currentAlpha>30) //threshold to optimize display
+                if(currentAlpha>0)
                 {
                     imageDataCanvas.data[canvasIndex+3] = 
                         (overlayCounter[canvasPixl]*imageDataCanvas.data[canvasIndex+3]+currentAlpha)/
                             (overlayCounter[canvasPixl]+1);
                             //1;
                     overlayCounter[canvasPixl] += 1;
-                }
-                else if(currentAlpha>0)
-                {
-                    imageDataCanvas.data[canvasIndex+3] = Math.max(imageDataCanvas.data[canvasIndex+3], currentAlpha)
                 }
             }
         }

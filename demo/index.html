@@ -15,21 +15,29 @@
 </head>
 <body>
 <p>
-    <strong>simpleheat2</strong> is improved 
-    <a href="https://github.com/mourner/simpleheat">mourner / simpleheat</a>
+<strong><a href="https://github.com/perthblank/simpleheat2">simpleheat2</a></strong> is an improved version of
+<a href="https://github.com/mourner/simpleheat">mourner / simpleheat</a>,<br/> which support different styles of blending mode when circles overlay
 </p>
 <div class="container">
     <div class="options">
         <label>Radius </label><input type="range" id="radius" value="40" min="10" max="50" /><br />
-        <label>Blur </label><input type="range" id="blur" value="15" min="10" max="50" /> <br />
+        <label>Blur </label><input type="range" id="blur" value="0" min="0" max="50" /> <br />
         <table>
             <tr>
-                <td><input id="superimposed" type="radio" name="mixType" checked="true" ></td> 
-                <td>Superimposed</td>
+                <td><input value="overlay" class="modeBtn" type="radio" name="blendType" checked="true" ></td> 
+                <td>overlay</td>
             </tr>
             <tr>
-                <td><input id="averaged" type="radio" name="mixType"></td> 
-                <td>Averaged</td>
+                <td><input value="mean" class="modeBtn" type="radio" name="blendType"></td> 
+                <td>mean</td>
+            </tr>
+            <tr>
+                <td><input value="max" class="modeBtn" type="radio" name="blendType"></td> 
+                <td>max</td>
+            </tr>
+            <tr>
+                <td><input value="min" class="modeBtn" type="radio" name="blendType"></td> 
+                <td>min</td>
             </tr>
         </table>
     </div>
@@ -47,7 +55,7 @@ function get(id) {
     return document.getElementById(id);
 }
 
-var heat = simpleheat('canvas').data(data).max(18).radius(40),
+var heat = simpleheat('canvas').data(data).max(18).radius(40,0),
     frame;
 
 function draw() {
@@ -58,12 +66,6 @@ function draw() {
 }
 
 draw();
-
-//get('canvas').onmousemove = function (e) {
-//    heat.add([e.layerX, e.layerY, 1]);
-//    frame = frame || window.requestAnimationFrame(draw);
-//};
-
 
 var radius = get('radius'),
     blur = get('blur'),
@@ -77,16 +79,16 @@ radius[changeType] = blur[changeType] = function (e) {
 var superimposed = get('superimposed'),
     averaged = get('averaged');
 
-superimposed['onclick'] = function(e) {
-    heat.mixMode("superimposed");
-    draw();
-}
+var modeBtns = document.getElementsByClassName("modeBtn");
 
-averaged['onclick'] = function(e) {
-    heat.mixMode("averaged");
-    draw();
+for(var i = 0; i<modeBtns.length; ++i)
+{
+    let mode = modeBtns[i]['value'];
+    modeBtns[i]['onclick'] = function(){
+        heat.blendMode(mode);
+        draw();
+    }
 }
-
 
 </script>
 </body>

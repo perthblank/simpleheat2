@@ -5,7 +5,7 @@ An improved version of [simpleheat](https://github.com/mourner/simpleheat), whic
 
 simpleheat2 demo at http://perthblank.github.io/simpleheat2/demo/.
 
-### Basic Usage
+#### Basic Usage
 Check [simpleheat](https://github.com/mourner/simpleheat) for basic usage.
 
 #### Set Blending Mode
